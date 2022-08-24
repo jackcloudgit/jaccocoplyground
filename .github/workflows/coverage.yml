@@ -37,8 +37,16 @@ jobs:
         min-coverage-changed-files: 60
         debug-mode: false
 
+    # - name: Check coverage tolerance
+    #   if: ${{ steps.jacoco.outputs.coverage-overall < 21 }}
+    #   uses: actions/github-script@v3
+    #   with:
+    #     script: |
+    #         core.setFailed('Coverage test below tolerance')
+
     - name: Check coverage tolerance
-      if: ${{ steps.jacoco.outputs.coverage-overall < 46 }}
+      if: |
+        ${{ steps.jacoco.outputs.coverage-overall < 18 }} && ${{ steps.jacoco.outputs.coverage-changed-files < 80 }}
       uses: actions/github-script@v3
       with:
         script: |
