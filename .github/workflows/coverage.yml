@@ -43,7 +43,10 @@ jobs:
     #   with:
     #     script: |
     #         core.setFailed('Coverage test below tolerance')
-
+    - name: Get the Coverage info
+      run: |
+        echo "Total coverage ${{ steps.jacoco.outputs.coverage-overall }}"
+        echo "Changed Files coverage ${{ steps.jacoco.outputs.coverage-changed-files }}"
     - name: Check coverage tolerance
       if: |
         ${{ steps.jacoco.outputs.coverage-overall < 50 }} || ${{ steps.jacoco.outputs.coverage-changed-files < 110 }}
@@ -51,8 +54,3 @@ jobs:
       with:
         script: |
             core.setFailed('Coverage test below tolerance')
-
-    - name: Get the Coverage info
-      run: |
-        echo "Total coverage ${{ steps.jacoco.outputs.coverage-overall }}"
-        echo "Changed Files coverage ${{ steps.jacoco.outputs.coverage-changed-files }}"
