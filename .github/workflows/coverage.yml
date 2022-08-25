@@ -48,9 +48,7 @@ jobs:
         echo "Total coverage ${{ steps.jacoco.outputs.coverage-overall }}"
         echo "Changed Files coverage ${{ steps.jacoco.outputs.coverage-changed-files }}"
     - name: Check coverage tolerance
-      if: |
-        ${{ steps.jacoco.outputs.coverage-overall != 50 }} ||
-        ${{ steps.jacoco.outputs.coverage-changed-files != 110 }} 
+      if: ${{ steps.jacoco.outputs.coverage-changed-files != 110 }} 
       uses: actions/github-script@v3
       with:
         script: |
