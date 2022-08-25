@@ -33,10 +33,17 @@ jobs:
       with:
         path: ${{ github.workspace }}/build/reports/jacoco/testCoverage/testCoverage.xml
         token: ${{ secrets.GITHUB_TOKEN }}
-        min-coverage-overall: 40
+        min-coverage-overall: 80
         min-coverage-changed-files: 60
         debug-mode: false
 
+    - name: Check coverage tolerance
+      if: ${{ steps.jacoco.outputs.coverage-overall > 80 }}
+      uses: actions/github-script@v3
+      with:
+        script: |
+            core.setFailed('Coverage test below tolerance')
+            
     - name: Get the Coverage info
       run: |
         echo "Total coverage ${{ steps.jacoco.outputs.coverage-overall }}"
